@@ -4,11 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@font-face {
-  font-family: "fallback";
-  src: local("Arial");
-}
-
 @theme inline {
   --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
   --font-script: "Allura", "Great Vibes", cursive;
@@ -39,6 +34,7 @@
   --color-ring: var(--ring);
   --color-gold: var(--gold);
   --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
   --color-cocoa: var(--cocoa);
   --color-cream: var(--cream);
 }
@@ -46,11 +42,11 @@
 :root {
   --radius: 0.5rem;
 
-  /* Brand palette */
   --cream: oklch(0.97 0.015 75);
   --rose: oklch(0.78 0.06 20);
   --rose-deep: oklch(0.55 0.09 15);
   --gold: oklch(0.72 0.11 80);
+  --gold-deep: oklch(0.58 0.13 60);
   --cocoa: oklch(0.32 0.04 40);
 
   --background: oklch(0.97 0.015 75);
@@ -73,10 +69,12 @@
   --input: oklch(0.88 0.02 60);
   --ring: oklch(0.72 0.11 80);
 
-  --gradient-warm: linear-gradient(135deg, oklch(0.97 0.015 75), oklch(0.92 0.04 30));
-  --gradient-gold: linear-gradient(135deg, oklch(0.78 0.10 75), oklch(0.65 0.13 50));
+  --gradient-warm: linear-gradient(135deg, oklch(0.97 0.015 75) 0%, oklch(0.94 0.04 30) 50%, oklch(0.91 0.05 40) 100%);
+  --gradient-gold: linear-gradient(135deg, oklch(0.78 0.10 75), oklch(0.62 0.14 50));
+  --gradient-rose: linear-gradient(135deg, oklch(0.85 0.06 20), oklch(0.55 0.09 15));
   --shadow-soft: 0 20px 50px -20px oklch(0.55 0.09 15 / 0.25);
-  --shadow-elegant: 0 30px 80px -30px oklch(0.32 0.04 40 / 0.35);
+  --shadow-elegant: 0 30px 80px -30px oklch(0.32 0.04 40 / 0.45);
+  --shadow-glow: 0 0 60px oklch(0.72 0.11 80 / 0.4);
 }
 
 .dark {
@@ -93,11 +91,12 @@
 
 @layer base {
   * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv01";
+    overflow-x: hidden;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
@@ -108,23 +107,87 @@
     font-family: var(--font-script);
     font-weight: 400;
   }
+  ::selection { background: var(--gold); color: var(--background); }
 }
 
 @layer utilities {
   .bg-gradient-warm { background: var(--gradient-warm); }
   .bg-gradient-gold { background: var(--gradient-gold); }
+  .bg-gradient-rose { background: var(--gradient-rose); }
   .text-gradient-gold {
     background: var(--gradient-gold);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+  .text-gradient-rose {
+    background: var(--gradient-rose);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .text-balance { text-wrap: balance; }
 }
 
+/* Animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(2deg); }
 }
-.animate-float { animation: float 6s ease-in-out infinite; }
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25px); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes draw-line {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.72 0.11 80 / 0.5); }
+  50% { box-shadow: 0 0 0 20px oklch(0.72 0.11 80 / 0); }
+}
+
+.animate-float { animation: float 7s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 30s linear infinite; }
+.animate-marquee { animation: marquee 40s linear infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.5s ease-out infinite; }
+
+.shimmer-text {
+  background: linear-gradient(90deg, var(--gold-deep) 0%, var(--gold) 25%, oklch(0.95 0.05 80) 50%, var(--gold) 75%, var(--gold-deep) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Custom cursor-friendly hover for cards */
+.tilt-hover {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s;
+}
+.tilt-hover:hover {
+  transform: translateY(-8px) rotate(-0.5deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
