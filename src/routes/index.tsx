@@ -6,6 +6,7 @@ import coffeeImg from "@/assets/coffee-station.jpg";
 import beverageImg from "@/assets/beverage-bar.jpg";
 import appsImg from "@/assets/appetizers.jpg";
 import logoImg from "@/assets/logo.png";
+import ownersImg from "@/assets/owners.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -174,6 +175,16 @@ function Hero() {
   const yText = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
+  const heroImages = [heroImg, coffeeImg, appsImg, beverageImg];
+  const [imageIndex, setImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
   return (
     <section id="top" ref={ref} className="relative min-h-screen overflow-hidden bg-gradient-warm">
       <Nav />
@@ -286,13 +297,20 @@ function Hero() {
 
           <div className="absolute -inset-4 rounded-full bg-gradient-gold opacity-20 blur-3xl" />
 
-          <img
-            src={heroImg}
-            alt="Surtido de postres artesanales de Bonbon by Cusani"
-            width={1536}
-            height={1280}
-            className="relative animate-float rounded-[2rem] object-cover shadow-elegant"
-          />
+          <div className="relative w-full aspect-square md:aspect-auto md:h-[32rem]">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={imageIndex}
+                src={heroImages[imageIndex]}
+                alt="Surtido de postres artesanales de Bonbon by Cusani"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+                className="relative w-full h-full rounded-[2rem] object-cover shadow-elegant"
+              />
+            </AnimatePresence>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -330,7 +348,7 @@ function Hero() {
 function Marquee() {
   const items = ["✦ Estación de Café", "✦ Barra de Bebidas", "✦ Mesa de Entremeses", "✦ Hechos Diariamente", "✦ Por Encargo", "✦ Eventos Privados"];
   return (
-    <div className="border-y border-primary/10 bg-primary py-5 text-primary-foreground overflow-hidden">
+    <div className="border-y border-primary/10 bg-primary py-8 text-primary-foreground overflow-hidden sm:py-10">
       <div className="flex animate-marquee whitespace-nowrap">
         {[...items, ...items, ...items].map((it, i) => (
           <span key={i} className="mx-8 font-display text-xl italic sm:text-2xl md:mx-12 md:text-3xl">
@@ -351,7 +369,7 @@ const services = [
 
 function Services() {
   return (
-    <section id="servicios" className="relative py-20 sm:py-28 md:py-36">
+    <section id="servicios" className="relative py-24 sm:py-36 md:py-48">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="mb-12 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
           <div className="max-w-xl">
@@ -406,7 +424,7 @@ function Services() {
 /* ---------- About ---------- */
 function About() {
   return (
-    <section id="nosotros" className="relative overflow-hidden bg-primary py-20 text-primary-foreground sm:py-28 md:py-36">
+    <section id="nosotros" className="relative overflow-hidden bg-primary py-24 text-primary-foreground sm:py-36 md:py-48">
       <div className="absolute inset-0 opacity-20">
         <motion.div
           animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
@@ -428,34 +446,46 @@ function About() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.2} className="space-y-6 text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
-          <p>
-            Somos una línea de repostería en desarrollo y trabajamos
-            <strong className="text-primary-foreground"> exclusivamente por encargo</strong>.
-            Cada pieza se prepara el mismo día para llegar a tu mesa con la
-            frescura, la textura y el sabor que merece.
-          </p>
-          <p>
-            En Bonbon by Cusani creemos que un postre no es solo un dulce —
-            es un detalle, una pausa, un recuerdo.
-          </p>
-          <div className="flex gap-8 pt-4 sm:gap-10">
-            {[
-              { v: "100%", l: "Artesanal" },
-              { v: "24h", l: "Recién hecho" },
-              { v: "∞", l: "Detalles" },
-            ].map((x, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, type: "spring" }}
-              >
-                <p className="font-display text-4xl text-gold sm:text-5xl">{x.v}</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-primary-foreground/60 sm:text-xs">{x.l}</p>
-              </motion.div>
-            ))}
+        <Reveal delay={0.2} className="space-y-6">
+          <div className="overflow-hidden rounded-3xl shadow-soft">
+            <motion.img
+              src={ownersImg}
+              alt="Dueños de Bonbon by Cusani"
+              loading="lazy"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.7 }}
+              className="h-full w-full object-cover aspect-[3/4]"
+            />
+          </div>
+          <div className="space-y-6 text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
+            <p>
+              Somos una línea de repostería en desarrollo y trabajamos
+              <strong className="text-primary-foreground"> exclusivamente por encargo</strong>.
+              Cada pieza se prepara el mismo día para llegar a tu mesa con la
+              frescura, la textura y el sabor que merece.
+            </p>
+            <p>
+              En Bonbon by Cusani creemos que un postre no es solo un dulce —
+              es un detalle, una pausa, un recuerdo.
+            </p>
+            <div className="flex gap-8 pt-4 sm:gap-10">
+              {[
+                { v: "100%", l: "Artesanal" },
+                { v: "24h", l: "Recién hecho" },
+                { v: "∞", l: "Detalles" },
+              ].map((x, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15, type: "spring" }}
+                >
+                  <p className="font-display text-4xl text-gold sm:text-5xl">{x.v}</p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-primary-foreground/60 sm:text-xs">{x.l}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -463,48 +493,149 @@ function About() {
   );
 }
 
+/* ---------- Lightbox Gallery ---------- */
+function LightboxGallery() {
+  const items = [heroImg, coffeeImg, appsImg, beverageImg, heroImg, appsImg, beverageImg, coffeeImg, appsImg, heroImg];
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const handlePrev = () => {
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex - 1 + items.length) % items.length);
+    }
+  };
+
+  const handleNext = () => {
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex + 1) % items.length);
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (selectedIndex === null) return;
+    if (e.key === "ArrowLeft") handlePrev();
+    if (e.key === "ArrowRight") handleNext();
+    if (e.key === "Escape") setSelectedIndex(null);
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedIndex]);
+
+  return (
+    <>
+      <section id="galeria" className="py-24 sm:py-36 md:py-48">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <Reveal className="mb-12 text-center md:mb-16">
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">Galería</p>
+            <h2 className="text-4xl text-primary sm:text-5xl md:text-6xl">
+              Pequeños <span className="font-script text-gradient-gold">placeres</span>.
+            </h2>
+          </Reveal>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
+            {items.map((src, i) => (
+              <Reveal key={i} delay={i * 0.08}>
+                <motion.button
+                  onClick={() => setSelectedIndex(i)}
+                  whileHover={{ scale: 1.03 }}
+                  className="overflow-hidden rounded-2xl shadow-soft aspect-square w-full cursor-pointer border-none bg-none p-0"
+                >
+                  <motion.img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    whileHover={{ scale: 1.15 }}
+                    transition={{ duration: 0.7 }}
+                    className="h-full w-full object-cover"
+                  />
+                </motion.button>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedIndex(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl mx-4"
+            >
+              <motion.img
+                key={selectedIndex}
+                src={items[selectedIndex]}
+                alt={`Imagen ${selectedIndex + 1}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                className="w-full h-auto max-h-[90vh] object-contain rounded-2xl"
+              />
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 p-3 rounded-full bg-white/20 hover:bg-white/30 transition text-white z-10"
+                aria-label="Imagen anterior"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 p-3 rounded-full bg-white/20 hover:bg-white/30 transition text-white z-10"
+                aria-label="Siguiente imagen"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedIndex(null)}
+                className="absolute -top-10 right-0 text-white hover:text-gold transition"
+                aria-label="Cerrar"
+              >
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Counter */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full text-white text-sm">
+                {selectedIndex + 1} / {items.length}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 /* ---------- Gallery ---------- */
 function Gallery() {
-  const items = [heroImg, coffeeImg, appsImg, beverageImg, heroImg, appsImg];
-  return (
-    <section id="galeria" className="py-20 sm:py-28 md:py-36">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="mb-12 text-center md:mb-16">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">Galería</p>
-          <h2 className="text-4xl text-primary sm:text-5xl md:text-6xl">
-            Pequeños <span className="font-script text-gradient-gold">placeres</span>.
-          </h2>
-        </Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-          {items.map((src, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className={`overflow-hidden rounded-2xl shadow-soft ${
-                  i === 0 || i === 5 ? "row-span-2 aspect-[3/4] md:aspect-[3/5]" : "aspect-square"
-                }`}
-              >
-                <motion.img
-                  src={src}
-                  alt=""
-                  loading="lazy"
-                  whileHover={{ scale: 1.15 }}
-                  transition={{ duration: 0.7 }}
-                  className="h-full w-full object-cover"
-                />
-              </motion.div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <LightboxGallery />;
 }
 
 /* ---------- Contact ---------- */
 function Contact() {
   return (
-    <section id="contacto" className="relative overflow-hidden bg-gradient-warm py-20 sm:py-28 md:py-36">
+    <section id="contacto" className="relative overflow-hidden bg-gradient-warm py-24 sm:py-36 md:py-48">
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
@@ -565,7 +696,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border bg-card py-10 sm:py-12">
+    <footer className="border-t border-border bg-card py-14 sm:py-16">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 sm:px-8 md:flex-row">
         <img src={logoImg} alt="Bonbon by Cusani" className="h-14 w-auto sm:h-16" />
         <p className="text-center text-[10px] uppercase tracking-[0.25em] text-muted-foreground sm:text-xs">
