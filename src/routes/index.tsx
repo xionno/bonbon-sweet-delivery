@@ -194,16 +194,16 @@ function Hero() {
         <motion.div
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 8, repeat: Infinity }}
-          className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-rose/30 blur-3xl"
+          className="absolute -top-40 -left-40 h-64 w-64 rounded-full bg-rose/30 blur-3xl sm:h-96 sm:w-96"
         />
         <motion.div
           animate={{ scale: [1.2, 1, 1.2] }}
           transition={{ duration: 10, repeat: Infinity }}
-          className="absolute -bottom-40 -right-40 h-[30rem] w-[30rem] rounded-full bg-gold/30 blur-3xl"
+          className="absolute -bottom-40 -right-40 h-64 w-64 rounded-full bg-gold/30 blur-3xl sm:h-[30rem] sm:w-[30rem]"
         />
       </div>
 
-      <motion.div style={{ opacity }} className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-10 px-5 pt-28 pb-16 sm:px-8 md:grid-cols-2 md:gap-12 md:pt-24 md:pb-20">
+      <motion.div style={{ opacity }} className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-8 px-4 pt-20 pb-12 sm:px-8 sm:pt-28 sm:pb-16 md:grid-cols-2 md:gap-12 md:pt-24 md:pb-20">
         <motion.div style={{ y: yText }} className="space-y-6 md:space-y-8">
           <motion.p
             initial={{ opacity: 0, x: -20 }}
@@ -214,7 +214,7 @@ function Hero() {
             dulce, fresco, hecho a mano
           </motion.p>
 
-          <h1 className="text-balance text-5xl leading-[0.95] text-primary sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+          <h1 className="text-balance text-4xl leading-[0.95] text-primary sm:text-5xl md:text-6xl lg:text-7xl">
             {"Postres que".split(" ").map((w, i) => (
               <motion.span
                 key={i}
@@ -259,18 +259,18 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8 }}
-            className="flex flex-wrap gap-3 sm:gap-4"
+            className="flex flex-wrap gap-2 sm:gap-4"
           >
             <a
               href="#contacto"
-              className="group relative overflow-hidden rounded-full bg-primary px-7 py-4 text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-soft transition hover:shadow-elegant sm:px-8 sm:text-sm"
+              className="group relative overflow-hidden rounded-full bg-primary px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-primary-foreground shadow-soft transition hover:shadow-elegant sm:px-8 sm:py-4 sm:text-xs"
             >
               <span className="relative z-10">Hacer un pedido</span>
               <span className="absolute inset-0 -translate-x-full bg-gradient-gold transition-transform duration-500 group-hover:translate-x-0" />
             </a>
             <a
               href="#servicios"
-              className="rounded-full border border-primary/30 px-7 py-4 text-xs uppercase tracking-[0.25em] text-primary transition hover:bg-primary/5 sm:px-8 sm:text-sm"
+              className="rounded-full border border-primary/30 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-primary transition hover:bg-primary/5 sm:px-8 sm:py-4 sm:text-xs"
             >
               Ver servicios
             </a>
@@ -281,7 +281,7 @@ function Hero() {
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            className="absolute -inset-6 sm:-inset-10"
+            className="absolute -inset-4 sm:-inset-6 md:-inset-10"
           >
             <svg viewBox="0 0 200 200" className="h-full w-full opacity-40">
               <defs>
@@ -297,7 +297,7 @@ function Hero() {
 
           <div className="absolute -inset-4 rounded-full bg-gradient-gold opacity-20 blur-3xl" />
 
-          <div className="relative w-full aspect-square md:aspect-auto md:h-[32rem]">
+          <div className="relative w-full aspect-square sm:aspect-auto sm:h-80 md:h-[32rem]">
             <AnimatePresence mode="wait">
               <motion.img
                 key={imageIndex}
@@ -370,21 +370,21 @@ const services = [
 function Services() {
   return (
     <section id="servicios" className="relative py-24 sm:py-36 md:py-48">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         <Reveal className="mb-12 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
           <div className="max-w-xl">
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">Nuestros servicios</p>
-            <h2 className="text-balance text-4xl text-primary sm:text-5xl md:text-6xl">
+          <h2 className="text-balance text-3xl text-primary sm:text-4xl md:text-5xl lg:text-6xl">
               Tres mesas, una <span className="font-script text-gradient-gold">experiencia</span>.
             </h2>
           </div>
-          <p className="max-w-sm text-muted-foreground">
+          <p className="max-w-sm text-sm text-muted-foreground sm:text-base">
             Diseñamos cada estación pensando en la estética, el sabor y el detalle
             que tu evento merece.
           </p>
         </Reveal>
 
-        <div className="grid gap-6 sm:gap-8 md:grid-cols-3">
+          <div className="grid gap-6 sm:gap-8 md:grid-cols-3 lg:gap-10">
           {services.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.15}>
               <motion.article
@@ -429,19 +429,19 @@ function About() {
         <motion.div
           animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
           transition={{ duration: 12, repeat: Infinity }}
-          className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-gold blur-3xl"
+          className="absolute -left-40 top-20 h-64 w-64 rounded-full bg-gold blur-3xl sm:h-96 sm:w-96"
         />
         <motion.div
           animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
           transition={{ duration: 14, repeat: Infinity }}
-          className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-rose blur-3xl"
+          className="absolute right-0 bottom-0 h-64 w-64 rounded-full bg-rose blur-3xl sm:h-96 sm:w-96"
         />
       </div>
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 md:grid-cols-2 md:gap-16">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 sm:gap-12 sm:px-8 md:grid-cols-2 md:gap-16">
         <Reveal>
-          <p className="font-script text-3xl text-gold sm:text-4xl">nuestra historia</p>
-          <h2 className="mt-4 text-balance text-4xl sm:text-5xl md:text-6xl">
+          <p className="font-script text-2xl text-gold sm:text-3xl md:text-4xl">nuestra historia</p>
+          <h2 className="mt-4 text-balance text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
             Repostería hecha con <em className="font-script not-italic shimmer-text">amor</em>, todos los días.
           </h2>
         </Reveal>
@@ -525,14 +525,14 @@ function LightboxGallery() {
   return (
     <>
       <section id="galeria" className="py-24 sm:py-36 md:py-48">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <Reveal className="mb-12 text-center md:mb-16">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">Galería</p>
-            <h2 className="text-4xl text-primary sm:text-5xl md:text-6xl">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8">
+          <Reveal className="mb-12 text-center md:mb-20">
+            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-gold sm:mb-4">Galería</p>
+            <h2 className="text-3xl text-primary sm:text-4xl md:text-5xl lg:text-6xl">
               Pequeños <span className="font-script text-gradient-gold">placeres</span>.
             </h2>
           </Reveal>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:grid-cols-5">
             {items.map((src, i) => (
               <Reveal key={i} delay={i * 0.08}>
                 <motion.button
@@ -639,36 +639,36 @@ function Contact() {
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute -right-20 top-20 h-72 w-72 rounded-full border border-gold/20"
+        className="absolute -right-32 top-10 h-40 w-40 rounded-full border border-gold/20 sm:-right-20 sm:top-20 sm:h-72 sm:w-72"
       />
       <motion.div
         animate={{ rotate: -360 }}
         transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-        className="absolute -left-20 bottom-20 h-96 w-96 rounded-full border border-rose/20"
+        className="absolute -left-32 -bottom-20 h-48 w-48 rounded-full border border-rose/20 sm:-left-20 sm:bottom-20 sm:h-96 sm:w-96"
       />
 
-      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
+      <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-8">
         <Reveal>
-          <p className="font-script text-3xl text-rose-deep sm:text-4xl">¿listo para algo dulce?</p>
+          <p className="font-script text-2xl text-rose-deep sm:text-3xl md:text-4xl">¿listo para algo dulce?</p>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="mt-4 text-balance text-4xl text-primary sm:text-5xl md:text-6xl lg:text-7xl">
+          <h2 className="mt-4 text-balance text-3xl text-primary sm:text-4xl md:text-5xl lg:text-6xl">
             Hagamos tu próximo <em className="font-script not-italic shimmer-text">evento</em> inolvidable.
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
-          <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground sm:text-lg">
+          <p className="mx-auto mt-6 max-w-xl text-sm text-muted-foreground sm:text-base md:text-lg">
             Cuéntanos los detalles de tu celebración. Respondemos cada mensaje
             personalmente para diseñar una propuesta a tu medida.
           </p>
         </Reveal>
         <Reveal delay={0.3}>
-          <div className="mt-10 flex flex-wrap justify-center gap-3 sm:gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-2 sm:gap-4 sm:mt-10">
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
               href="https://wa.me/?text=Hola%20Bonbon%20by%20Cusani,%20me%20gustaría%20hacer%20un%20pedido"
-              className="rounded-full bg-primary px-8 py-4 text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-soft animate-pulse-glow sm:px-10 sm:py-5 sm:text-sm"
+              className="rounded-full bg-primary px-6 py-3 text-[10px] uppercase tracking-[0.2em] text-primary-foreground shadow-soft animate-pulse-glow sm:px-10 sm:py-4 sm:text-xs md:text-sm"
             >
               Escribir por WhatsApp
             </motion.a>
@@ -676,7 +676,7 @@ function Contact() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
               href="mailto:hola@bonboncusani.com"
-              className="rounded-full border border-primary/30 px-8 py-4 text-xs uppercase tracking-[0.25em] text-primary transition hover:bg-primary/5 sm:px-10 sm:py-5 sm:text-sm"
+              className="rounded-full border border-primary/30 px-6 py-3 text-[10px] uppercase tracking-[0.2em] text-primary transition hover:bg-primary/5 sm:px-10 sm:py-4 sm:text-xs md:text-sm"
             >
               Enviar email
             </motion.a>
